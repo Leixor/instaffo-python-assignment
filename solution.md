@@ -1,5 +1,10 @@
 # Solution
 
+## How to run my code
+You just have to execute `docker compose up -d`
+
+The api and the docs will be available on [localhost:8000](localhost:8000) and [localhost:8000/docs](localhost:8000/docs) respectively and a test coverage report will be automatically generated into the [tests folder](./api/tests)
+
 ## Explanation
 ### Entrypoint
 [main.py](./api/main.py) is the entrypoint that simple serves an app instance and connects the api_router that then in turn serves both routes that are necessary for the task.
