@@ -1,0 +1,62 @@
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.17.0
+    ports:
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - script.painless.regex.enabled=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      nproc: 4096
+      nofile: 65536
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.17.0
+    environment:
+      SERVER_NAME: localhost
+      ELASTICSEARCH_URL: http://elasticsearch:9200/
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+  seed:
+    build:
+      context: ./seed_image
+      args:
+        ES_URL: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    entrypoint: /bin/sh
+    command: >
+      -c "sleep 30 && python populate_es_indices.py"
+  api:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    container_name: api
+    volumes: 
+      - ./api/routes:/app/api/routes
+      - ./api/repositories:/app/api/repositories
+      - ./api/models:/app/api/models
+      - ./api/lib:/app/api/lib
+    environment:
+      ES_URL: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    ports:
+      - 8000:8000
+    command: ["poetry", "run", "fastapi", "dev", "--host", "0.0.0.0", "api/main.py"]
+  
+  api_test_coverage:
+    build:
+      context: .
+      dockerfile: ./api/Dockerfile
+    container_name: api_test_coverage
+    volumes: 
+      - ./api/tests:/app/api/tests
+    environment:
+      ES_URL: http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    command: ["poetry", "run", "pytest", "--cov=api", "--cov-report=html:api/tests/coverage"]

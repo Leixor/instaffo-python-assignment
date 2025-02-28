@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "python-developer"
+version = "0.1.0"
+description = ""
+authors = ["Feng Lu <feng@instaffo.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~3.11"
+elasticsearch = "^8.17.0"
+python-dotenv = "^1.0.1"
+fastapi = { version = "^0.115.5", extras = ["standard"] }
+aiohttp ="3.11.13"
+pytest = "8.3.4"
+pytest-asyncio = "0.21.2"
+pytest-cov = "6.0.0"
+httpx = "0.27.2"
+
+ruff = "^0.9.7"
+pyright = { version = "^1.1.394", extras = ["nodejs"] }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_mode = "strict"
+
+[tool.ruff]
+lint.extend-select = ["I"]
+line-length = 120
+

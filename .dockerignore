@@ -1,0 +1,5 @@
+.venv
+.env
+.ruff_cache
+./api/.env
+./api/.ruff_cache
