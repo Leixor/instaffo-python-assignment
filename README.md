@@ -1,3 +1,5 @@
+# [Link to a markdown file that outlines the solution](./solution.md)
+
 # Intro
 
 For your next step in the application process at Instaffo we'd like you to do the task given below to be able to further assess your skills and knowledge. 
