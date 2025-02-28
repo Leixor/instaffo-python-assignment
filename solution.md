@@ -22,6 +22,9 @@ Had to create a simple [Dockerfile](./api/Dockerfile). Just installed poetry and
 
 Than added 2 new services to the [docker-compose.yml](./docker-compose.yml), the api itself and a pod that runs the test and creates the test coverage in the [tests folder](./api/tests/), also saving it to the file system as this folder is mounted to the local file system, so you don't have to look into the docker container itself to see the test coverage etc.
 
+### Formatting, Linting and Typechecking
+Pretty standard stack with ruff as formater and linter and pyright for typechecking.
+
 ### Tests
 Pretty simple tests, can say I struggled a bit with the async event loop in this case as I created the elasticsearch dependency wrong at the beginning, got it running at the end though.
 

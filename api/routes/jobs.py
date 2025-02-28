@@ -30,11 +30,7 @@ async def get_job(id: int, job_repository: JobRepositoryDep) -> JobPublic:
         raise HTTPException(status_code=404)
 
 
-@router.get(
-    "/{id}/candidates",
-    response_model=List[MatchingCandidate],
-    description="Extracts search queries from the given job and returns matching candidates.",
-)
+@router.get("/{id}/candidates", response_model=List[MatchingCandidate])
 async def get_jobs_for_candidate(
     id: int,
     job_repository: JobRepositoryDep,
